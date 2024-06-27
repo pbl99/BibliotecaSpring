@@ -9,10 +9,33 @@
 </head>
 
 <body>
+	<div class="container">
 	<h1>BIBLIOTECA</h1>
+	<h2>Catálogo de libros</h2>
 	<!-- Incluyendo el fragmento del menú desde fragments.html -->
 	<div th:replace="fragments :: menuFragment"></div>
 
+	<form th:action="@{/registro}" th:object="${usuario}" method="post">
+		<div class="mb-3">
+			<label for="email" class="form-label">Email</label>
+			<input type="text" class="form-control" id="email" name="email" th:field="*{email}">
+			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+		</div>
+		<div class="mb-3">
+			<label for="username" class="form-label">Usuario</label>
+			<input type="text" class="form-control" id="username" name="username" th:field="*{username}">
+			<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></div>
+		</div>
+		<div class="mb-3">
+			<label for="password" class="form-label">Contraseña</label>
+			<input type="password" class="form-control" id="password" name="password" th:field="*{password}">
+			<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
+		</div>
+		<div>
+			<input type="submit" class="btn btn-primary" value="Registrarse">
+		</div>
+		</div>
+	</form>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>

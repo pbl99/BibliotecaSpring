@@ -1,5 +1,8 @@
 package com.palmen.biblioteca.service;
 
-public interface IUsuarioService {
+import com.palmen.biblioteca.models.entities.Usuario;
 
+public interface IUsuarioService {
+	void save(Usuario usuario);
+	
 }

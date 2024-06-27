@@ -6,13 +6,18 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Usuario {
 
 	@Id
+	@Email
 	private String email;
+	@NotNull
 	private String username;
+	@NotNull
 	private String password;
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Libro> libros;
