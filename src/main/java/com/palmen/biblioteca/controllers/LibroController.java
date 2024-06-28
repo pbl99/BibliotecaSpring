@@ -60,9 +60,15 @@ public class LibroController {
 	}
 
 	@PostMapping("/borrarLibros")
-	public String borrarLibros(Libro libro) {
-		libroService.deleteById(libro.getIsbn());
-		return "libros";
+	public String borrarLibros(Libro libro, Model model) {
+		Optional<Libro> optionalLibro = libroService.findById(libro.getIsbn());
+		if (optionalLibro.isPresent()) {
+			libroService.deleteById(libro.getIsbn());
+			model.addAttribute("exito", "El libro se ha borrado correctamente");
+		} else {
+			model.addAttribute("errorBorrarPorId", "El Libro no ha sido encontrado");
+		}
+		return "panel-admin";
 	}
 
 	@PostMapping("/buscarPorId")
@@ -70,12 +76,14 @@ public class LibroController {
 		Optional<Libro> optionalLibro = libroService.findById(libro.getIsbn());
 		if (optionalLibro.isPresent()) {
 			model.addAttribute("libro", optionalLibro.get());
+			return "ver-libros";
 		} else {
 			// Manejar el caso cuando no se encuentra el libro, por ejemplo, agregando un
 			// mensaje de error
-			model.addAttribute("error", "Libro no encontrado");
+			model.addAttribute("errorBuscarPorId", "Libro no encontrado");
+			return "panel-admin";
 		}
-		return "ver-libros";
+
 	}
 
 	@GetMapping("/buscarTodos")

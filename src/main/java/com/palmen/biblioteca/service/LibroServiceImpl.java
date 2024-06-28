@@ -10,28 +10,25 @@ import com.palmen.biblioteca.models.entities.Libro;
 import com.palmen.biblioteca.repository.LibroRepository;
 
 @Service
-public class LibroServiceImpl implements ILibroService{
+public class LibroServiceImpl implements ILibroService {
 
 	@Autowired
 	private LibroRepository libroRepository;
-	
+
 	@Override
 	public void save(Libro libro) {
 		libroRepository.save(libro);
 	}
 
-
 	@Override
-	public void deleteById(Integer isbn) {
+	public void deleteById(String isbn) {
 		libroRepository.deleteById(isbn);
 	}
 
-
 	@Override
-	public Optional<Libro> findById(Integer isbn) {
+	public Optional<Libro> findById(String isbn) {
 		return libroRepository.findById(isbn);
 	}
-
 
 	@Override
 	public List<Libro> findAll() {

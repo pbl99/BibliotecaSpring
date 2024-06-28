@@ -8,9 +8,9 @@ import com.palmen.biblioteca.models.entities.Libro;
 public interface ILibroService {
 	void save(Libro libro);
 
-	void deleteById(Integer isbn);
+	void deleteById(String isbn);
 
-	Optional<Libro> findById(Integer isbn);
+	Optional<Libro> findById(String isbn);
 
 	List<Libro> findAll();
 

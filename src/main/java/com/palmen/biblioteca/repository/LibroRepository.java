@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.palmen.biblioteca.models.entities.Libro;
 
 @Repository
-public interface LibroRepository extends JpaRepository<Libro, Integer>{
+public interface LibroRepository extends JpaRepository<Libro, String>{
 
 }

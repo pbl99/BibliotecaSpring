@@ -7,7 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class Usuario {
@@ -15,10 +16,14 @@ public class Usuario {
 	@Id
 	@Email
 	private String email;
-	@NotNull
+
+	@NotBlank(message = "El nombre de usuario no puede estar vacío")
 	private String username;
-	@NotNull
+
+	@NotBlank(message = "La contraseña no puede estar vacía")
+	@Pattern(regexp = ".{8,}", message = "La contraseña debe tener al menos 8 caracteres")
 	private String password;
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Libro> libros;
 

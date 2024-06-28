@@ -19,27 +19,33 @@
 		<form th:action="@{/crearLibros}" th:object="${libro}" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="isbn">Isbn:</label>
-				<input type="text" class="form-control" id="isbn" name="isbn" th:field="*{isbn}">
+				<input type="text" class="form-control" id="isbn" name="isbn" th:value="${isbn}">
+				<div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="alert alert-danger"></div>
 			</div>
 			<div class="form-group">
 				<label for="titulo">Título:</label>
 				<input type="text" class="form-control" id="titulo" name="titulo" th:field="*{titulo}">
+				<div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="alert alert-danger"></div>
 			</div>
 			<div class="form-group">
 				<label for="autor">Autor:</label>
 				<input type="text" class="form-control" id="autor" name="autor" th:field="*{autor}">
+				<div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}" class="alert alert-danger"></div>
 			</div>
 			<div class="form-group">
 				<label for="genero">Género:</label>
 				<input type="text" class="form-control" id="genero" name="genero" th:field="*{genero}">
+				<div th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}" class="alert alert-danger"></div>
 			</div>
 			<div class="form-group">
 				<label for="paginas">Páginas:</label>
 				<input type="text" class="form-control" id="paginas" name="paginas" th:field="*{paginas}">
+				<div th:if="${#fields.hasErrors('paginas')}" th:errors="*{paginas}" class="alert alert-danger"></div>
 			</div>
 			<div class="form-group">
 				<label for="imagen">Añadir Imagen:</label>
 				<input type="file" class="form-control-file" id="imagen" name="imagen" th:field="*{imagen}">
+				<div th:if="${message}" class="alert alert-danger" th:text="${message}"></div>
 			</div>
 			<div>
 				<input type="submit" class="btn btn-primary" value="Crear Libro">
@@ -48,25 +54,28 @@
 
 		<h2>Borrar Libros</h2>
 		<form th:action="@{/borrarLibros}" th:object="${libro}" method="post">
-			<div>
+			<div class="form-group">
 				<label for="isbn">Isbn</label>
-				<input type="text" id="isbn" name="isbn" th:field="*{isbn}">
+				<input type="text" class="form-control" id="isbn" name="isbn" th:value="${isbn}">
+				<div th:if="${exito}" class="alert alert-danger" th:text="${exito}"></div>
+				<div th:if="${errorBorrarPorId}" class="alert alert-danger" th:text="${errorBorrarPorId}"></div>
 			</div>
-			<input type="submit" value="Enviar">
+			<input type="submit" class="btn btn-primary" value="Enviar">
 		</form>
-		<h2>Buscar libro por Id</h2>
+		<h2>Buscar libro por Isbn</h2>
 		<form th:action="@{/buscarPorId}" th:object="${libro}" method="post">
-			<div>
+			<div class="form-group">
 				<label for="isbn">Isbn</label>
-				<input type="text" id="isbn" name="isbn" th:field="*{isbn}">
+				<input type="text" class="form-control" id="isbn" name="isbn" th:value="${isbn}">
+				<div th:if="${errorBuscarPorId}" class="alert alert-danger" th:text="${errorBuscarPorId}"></div>
 			</div>
 			<div>
-				<input type="submit" value="Buscar">
+				<input type="submit" class="btn btn-primary" value="Buscar">
 			</div>
 		</form>
 		<h2>Buscar Todos los Libros</h2>
 		<a href="/buscarTodos">
-			<button>Buscar Todos los Libros</button>
+			<button class="btn btn-primary">Buscar Todos los Libros</button>
 		</a>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

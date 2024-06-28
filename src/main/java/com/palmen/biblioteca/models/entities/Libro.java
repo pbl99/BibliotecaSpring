@@ -7,20 +7,34 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Libro {
 
 	@Id
-	private int isbn;
+	@Pattern(regexp = "\\d{13}", message = "El ISBN debe contener 13 dígitos númericos") // Exactamente 13 dígitos
+	private String isbn;
+
+	@NotBlank(message = "El título no puede estar vacío")
 	private String titulo;
+	@NotBlank(message = "El autor no puede estar vacío")
 	private String autor;
+	@NotBlank(message = "El género no puede estar vacío")
 	private String genero;
-	private String rutaImagen;
-	private int paginas;
 	
+	private String rutaImagen;
+	
+	@NotNull(message = "El número de páginas no puede estar vacío")
+	@Positive(message = "El número de páginas debe ser positivo")
+	private Integer paginas;
+
 	@Transient
-	private MultipartFile imagen; // Este campo es para el archivo de la imagen, no se almacena en la base de datos
+	private MultipartFile imagen; // Este campo es para el archivo de la imagen, no se almacena en la base de
+									// datos
 
 	@ManyToOne
 	@JoinColumn(name = "user_email")
@@ -50,19 +64,19 @@ public class Libro {
 		this.genero = genero;
 	}
 
-	public int getPaginas() {
+	public Integer getPaginas() {
 		return paginas;
 	}
 
-	public void setPaginas(int paginas) {
+	public void setPaginas(Integer paginas) {
 		this.paginas = paginas;
 	}
 
-	public int getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(int isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
