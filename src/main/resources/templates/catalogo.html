@@ -9,27 +9,35 @@
 </head>
 
 <body>
-	<h1>BIBLIOTECA</h1>
-	<h2>Catálogo de libros</h2>
-	<!-- Incluyendo el fragmento del menú desde fragments.html -->
-	<div th:replace="fragments :: menuFragment"></div>
+	<div class="container">
+		<h1>BIBLIOTECA</h1>
+		<h2>Catálogo de libros</h2>
+		<!-- Incluyendo el fragmento del menú desde fragments.html -->
+		<div th:replace="fragments :: menuFragment"></div>
 
-
-	<ul class="catalogo-libros">
-		<li style="list-style-type: none;">
-			<div class="libro-imagen">
-				<img th:src="@{/images/elDragon.png}" alt="Portada del libro" width="200" height="300">
+		<div class="row">
+			<!-- Repite este bloque para cada libro -->
+			<div class="col-md-3" th:each="lib : ${libros}">
+				<div class="card mb-4 shadow-sm">
+					<div style="width: 304px; height: 450px; overflow: hidden;">
+						<img class="card-img-top" th:src="@{/images/} + ${lib.rutaImagen}" alt="Portada del libro"
+							style="object-fit: cover; width: 100%; height: 100%;">
+					</div>
+					<div class="card-body">
+						<h5 class="card-title" th:text="${lib.titulo}">Título del Libro</h5>
+						<p class="card-text">
+							<strong>Autor:</strong> <span th:text="${lib.autor}">Autor del Libro</span><br>
+							<strong>Páginas:</strong> <span th:text="${lib.paginas}">Número de Páginas</span>
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-secondary">Reservar</button>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="libro-detalle">
-				<div class="libro-titulo">Título del Libro</div>
-				<div class="libro-autor">Autor del Libro</div>
-				<div class="libro-paginas">Número de Páginas: 300</div>
-				<!-- Otros detalles del libro -->
-			</div>
-		</li>
-		<!-- Repite este bloque para cada libro -->
-	</ul>
-
+			<!-- Fin del bloque -->
+		</div>
+	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>

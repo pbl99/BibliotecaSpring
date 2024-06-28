@@ -9,40 +9,43 @@
 </head>
 
 <body>
-	<h1>BIBLIOTECA</h1>
-	<!-- Incluyendo el fragmento del menú desde fragments.html -->
-	<div th:replace="fragments :: menuFragment"></div>
+	<div class="container">
+		<h1>BIBLIOTECA</h1>
+		<!-- Incluyendo el fragmento del menú desde fragments.html -->
+		<div th:replace="fragments :: menuFragment"></div>
 
-	<h2>Listado de Libros</h2>
-	<table class="table table-striped table-hover table-bordered">
-		<thead class="thead-dark">
-			<tr>
-				<th>ISBN</th>
-				<th>Título</th>
-				<th>Autor</th>
-				<th>Género</th>
-				<th>Páginas</th>
-				<th>Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="lib : ${libro}">
-				<td th:text="${lib.isbn}"></td>
-				<td th:text="${lib.titulo}"></td>
-				<td th:text="${lib.autor}"></td>
-				<td th:text="${lib.genero}"></td>
-				<td th:text="${lib.paginas}"></td>
-				<td class="actions">
-					<a class="btn btn-primary btn-sm" th:href="@{/libros/editar/{isbn}(isbn=${lib.isbn})}">Editar</a>
-					<form th:action="@{/borrarLibros}" method="post" style="display: inline-block;">
-						<input type="hidden" name="isbn" th:value="${lib.isbn}" />
-						<input type="submit" class="btn btn-danger btn-sm" value="Eliminar"
-							onclick="return confirm('¿Estás seguro de eliminar este libro?')" />
-					</form>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+		<h2>Listado de Libros</h2>
+		<table class="table table-striped table-hover table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th>ISBN</th>
+					<th>Título</th>
+					<th>Autor</th>
+					<th>Género</th>
+					<th>Páginas</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="lib : ${libro}">
+					<td th:text="${lib.isbn}"></td>
+					<td th:text="${lib.titulo}"></td>
+					<td th:text="${lib.autor}"></td>
+					<td th:text="${lib.genero}"></td>
+					<td th:text="${lib.paginas}"></td>
+					<td class="actions">
+						<a class="btn btn-primary btn-sm"
+							th:href="@{/libros/editar/{isbn}(isbn=${lib.isbn})}">Editar</a>
+						<form th:action="@{/borrarLibros}" method="post" style="display: inline-block;">
+							<input type="hidden" name="isbn" th:value="${lib.isbn}" />
+							<input type="submit" class="btn btn-danger btn-sm" value="Eliminar"
+								onclick="return confirm('¿Estás seguro de eliminar este libro?')" />
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>
