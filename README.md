@@ -22,10 +22,12 @@ BibliotecaApp es una aplicación para la gestión de bibliotecas que permite a l
 - **Gestión de dependencias**: Maven
 - **Estilos**: Bootstrap
 
-## Requisitos
+## Versiones utilizadas
 
-- Java 11 o superior
-- Maven 3.6.3 o superior
+- Java 17
+- Maven 3.9.7
+- Spring Boot 3.3.1
+- BootStrap 5.3.3
 
 ## Instalación
 
