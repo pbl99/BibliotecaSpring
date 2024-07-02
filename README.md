@@ -4,7 +4,7 @@ Aplicación de Sistema de Gestión de Bibliotecas
 
 ## Descripción
 
-BibliotecaApp es una aplicación para la gestión de bibliotecas que permite a los administradores crear, actualizar y eliminar libros, así como a los usuarios buscar libros disponibles y cogerlos prestados. También incluye funcionalidad básica de autenticación y gestión de sesiones de usuarios.
+BibliotecaSpring es una aplicación para la gestión de bibliotecas que permite a los administradores crear, actualizar y eliminar libros, así como a los usuarios buscar libros disponibles y cogerlos prestados. También incluye funcionalidad básica de autenticación y gestión de sesiones de usuarios.
 
 ## Funcionalidades
 
