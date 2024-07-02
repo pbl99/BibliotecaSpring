@@ -11,7 +11,7 @@
 <body>
 	<div class="container">
 		<h1>BIBLIOTECA</h1>
-		<h3>Catálogo de libros</h3>
+		<h3>Mi Perfil</h3>
 		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
 		<div th:if="${session.usuario == null}">
 			<!-- Menú por defecto para usuarios no logeados -->
@@ -25,34 +25,47 @@
 				<div th:replace="fragments :: menu-usuario"></div>
 			</div>
 		</div>
-
-		<div class="row">
-			<!-- Repite este bloque para cada libro -->
-			<div class="col-md-3" th:each="lib : ${libros}">
-				<div class="card mb-4 shadow-sm">
-					<div style="width: 304px; height: 450px; overflow: hidden;">
-						<img class="card-img-top" th:src="@{/images/} + ${lib.rutaImagen}" alt="Portada del libro"
-							style="object-fit: cover; width: 100%; height: 100%;">
+	</div>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="text-center">Mi Perfil</h3>
 					</div>
 					<div class="card-body">
-						<h5 class="card-title" th:text="${lib.titulo}">Título del Libro</h5>
-						<p class="card-text">
-							<strong>Autor:</strong> <span th:text="${lib.autor}">Autor del Libro</span><br>
-							<strong>Páginas:</strong> <span th:text="${lib.paginas}">Número de Páginas</span>
-						</p>
-						<div class="d-flex justify-content-between align-items-center">
-							<form th:action="@{/reservarLibro}" method="post" style="display: inline-block;">
-								<input type="hidden" name="isbn" th:value="${lib.isbn}" />
-								<input type="submit" class="btn btn-sm btn-outline-secondary" value="Reservar"
-									onclick="return confirm('Seguro que quieres reservar este libro?')" />
-							</form>
+						<div class="row">
+							<div class="col-md-6">
+								<h5>Nombre:</h5>
+								<p th:text="${usuario.nombre}"></p>
+							</div>
+							<div class="col-md-6">
+								<h5>Apellidos:</h5>
+								<p th:text="${usuario.apellidos}"></p>
+							</div>
+							<div class="col-md-6">
+								<h5>Username:</h5>
+								<p th:text="${usuario.username}"></p>
+							</div>
+							<div class="col-md-6">
+								<h5>Email:</h5>
+								<p th:text="${usuario.email}"></p>
+							</div>
+							<div class="col-md-6">
+								<h5>Fecha de Registro:</h5>
+								<p th:text="${usuario.fechaRegistro}"></p>
+							</div>
+							<!-- Puedes agregar más campos según sea necesario -->
 						</div>
+					</div>
+					<div class="card-footer text-center">
+						<a href="#" class="btn btn-primary">Editar Perfil</a>
 					</div>
 				</div>
 			</div>
-			<!-- Fin del bloque -->
 		</div>
 	</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>

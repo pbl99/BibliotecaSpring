@@ -11,7 +11,7 @@
 <body>
 	<div class="container">
 		<h1>BIBLIOTECA</h1>
-		<h3>Catálogo de libros</h3>
+		<h3>Préstamos</h3>
 		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
 		<div th:if="${session.usuario == null}">
 			<!-- Menú por defecto para usuarios no logeados -->
@@ -25,32 +25,34 @@
 				<div th:replace="fragments :: menu-usuario"></div>
 			</div>
 		</div>
-
-		<div class="row">
-			<!-- Repite este bloque para cada libro -->
-			<div class="col-md-3" th:each="lib : ${libros}">
-				<div class="card mb-4 shadow-sm">
-					<div style="width: 304px; height: 450px; overflow: hidden;">
-						<img class="card-img-top" th:src="@{/images/} + ${lib.rutaImagen}" alt="Portada del libro"
-							style="object-fit: cover; width: 100%; height: 100%;">
-					</div>
-					<div class="card-body">
-						<h5 class="card-title" th:text="${lib.titulo}">Título del Libro</h5>
-						<p class="card-text">
-							<strong>Autor:</strong> <span th:text="${lib.autor}">Autor del Libro</span><br>
-							<strong>Páginas:</strong> <span th:text="${lib.paginas}">Número de Páginas</span>
-						</p>
-						<div class="d-flex justify-content-between align-items-center">
-							<form th:action="@{/reservarLibro}" method="post" style="display: inline-block;">
-								<input type="hidden" name="isbn" th:value="${lib.isbn}" />
-								<input type="submit" class="btn btn-sm btn-outline-secondary" value="Reservar"
-									onclick="return confirm('Seguro que quieres reservar este libro?')" />
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Fin del bloque -->
+	</div>
+	<div class="container mt-5">
+		<h2 class="text-center">Historial de Préstamos</h2>
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered">
+				<thead class="table-dark">
+					<tr>
+						<th>#</th>
+						<th>ISBN</th>
+						<th>Título</th>
+						<th>Autor</th>
+						<th>Fecha de Préstamo</th>
+						<th>Fecha de Devolución</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="prestamo, rowStat : ${prestamos}">
+						<td th:text="${rowStat.index + 1}"></td>
+						<td th:text="${prestamo.libro.isbn}"></td>
+						<td th:text="${prestamo.libro.titulo}"></td>
+						<td th:text="${prestamo.libro.autor}"></td>
+						<td th:text="${#dates.format(prestamo.fechaPrestamo, 'dd/MM/yyyy HH:mm')}"></td>
+						<td th:text="${#dates.format(prestamo.fechaDevolucion, 'dd/MM/yyyy HH:mm')}"
+							th:if="${prestamo.fechaDevolucion != null}"></td>
+						<td th:text="'En préstamo'" th:if="${prestamo.fechaDevolucion == null}"></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

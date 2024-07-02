@@ -10,31 +10,52 @@
 
 <body>
 	<div class="container">
-	<h1>BIBLIOTECA</h1>
-	<h2>Catálogo de libros</h2>
-	<!-- Incluyendo el fragmento del menú desde fragments.html -->
-	<div th:replace="fragments :: menuFragment"></div>
+		<h1>BIBLIOTECA</h1>
+		<h2>Catálogo de libros</h2>
+		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
+		<div th:if="${session.usuario == null}">
+			<!-- Menú por defecto para usuarios no logeados -->
+			<div th:replace="fragments :: menu-por-defecto"></div>
+		</div>
+		<div th:if="${session.usuario != null}">
+			<div th:if="${session.usuario.esAdmin}">
+				<div th:replace="fragments :: menu-admin"></div>
+			</div>
+			<div th:if="${!session.usuario.esAdmin}">
+				<div th:replace="fragments :: menu-usuario"></div>
+			</div>
+		</div>
 
-	<form th:action="@{/registro}" th:object="${usuario}" method="post">
-		<div class="mb-3">
-			<label for="email" class="form-label">Email</label>
-			<input type="text" class="form-control" id="email" name="email" th:field="*{email}">
-			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
-		</div>
-		<div class="mb-3">
-			<label for="username" class="form-label">Usuario</label>
-			<input type="text" class="form-control" id="username" name="username" th:field="*{username}">
-			<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></div>
-		</div>
-		<div class="mb-3">
-			<label for="password" class="form-label">Contraseña</label>
-			<input type="password" class="form-control" id="password" name="password" th:field="*{password}">
-			<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
-		</div>
-		<div>
-			<input type="submit" class="btn btn-primary" value="Registrarse">
-		</div>
-		</div>
+		<form th:action="@{/registro}" th:object="${usuario}" method="post">
+			<div class="mb-3">
+				<label for="nombre" class="form-label">Nombre</label>
+				<input type="text" class="form-control" id="nombre" name="nombre" th:field="*{nombre}">
+				<div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></div>
+			</div>
+			<div class="mb-3">
+				<label for="apellidos" class="form-label">Apellidos</label>
+				<input type="text" class="form-control" id="apellidos" name="apellidos" th:field="*{apellidos}">
+				<div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="text-danger"></div>
+			</div>
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input type="text" class="form-control" id="email" name="email" th:field="*{email}">
+				<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+			</div>
+			<div class="mb-3">
+				<label for="username" class="form-label">Usuario</label>
+				<input type="text" class="form-control" id="username" name="username" th:field="*{username}">
+				<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></div>
+			</div>
+			<div class="mb-3">
+				<label for="password" class="form-label">Contraseña</label>
+				<input type="password" class="form-control" id="password" name="password" th:field="*{password}">
+				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
+			</div>
+			<div>
+				<input type="submit" class="btn btn-primary" value="Registrarse">
+			</div>
+	</div>
 	</form>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

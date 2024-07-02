@@ -11,9 +11,21 @@
 <body>
 	<div class="container">
 		<h1>BIBLIOTECA</h1>
-		<h2>Catálogo de libros</h2>
-		<!-- Incluyendo el fragmento del menú desde fragments.html -->
-		<div th:replace="fragments :: menuFragment"></div>
+		<h3>Panel de administración</h3>
+		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
+		<div th:if="${session.usuario == null}">
+			<!-- Menú por defecto para usuarios no logeados -->
+			<div th:replace="fragments :: menu-por-defecto"></div>
+		</div>
+		<div th:if="${session.usuario != null}">
+			<div th:if="${session.usuario.esAdmin}">
+				<div th:replace="fragments :: menu-admin"></div>
+			</div>
+			<div th:if="${!session.usuario.esAdmin}">
+				<div th:replace="fragments :: menu-usuario"></div>
+			</div>
+		</div>
+
 
 		<h2>Crear libros</h2>
 		<form th:action="@{/crearLibros}" th:object="${libro}" method="post" enctype="multipart/form-data">

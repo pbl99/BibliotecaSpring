@@ -10,21 +10,8 @@
 </head>
 
 <body>
-	<!-- Fragmento del Menú de Navegación 
-	<nav th:fragment="menuFragment">
-		<ul>
-			<li><a href="/index">Inicio</a></li>
-			<li><a href="#">Catálogo de libros</a></li>
-			<li><a href="#">Historial</a></li>
-			<li><a href="#">Reservas</a></li>
-			<li><a href="/login">Login</a></li>
-			<li><a href="/verPanelAdmin">Panel Administrador</a></li>
-		</ul>
-	</nav> -->
-
-	<!-- Otros fragmentos comunes pueden ir aquí -->
-	<!-- Fragmento del Menú de Navegación -->
-	<nav th:fragment="menuFragment" class="navbar navbar-expand-lg navbar-light bg-light">
+	<!-- Fragmento del Menú de Navegación por defecto-->
+	<nav th:fragment="menu-por-defecto" class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">Biblioteca</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
 			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,16 +26,67 @@
 					<a class="nav-link" href="/catalogo">Catálogo de libros</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Historial</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Reservas</a>
+					<a class="nav-link" href="/registro">Registro</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/login">Login</a>
 				</li>
+			</ul>
+		</div>
+	</nav>
+	<!-- Fragmento del Menú de Navegación para usuarios-->
+	<nav th:fragment="menu-usuario" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Biblioteca</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/index">Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/catalogo">Catálogo de libros</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/misPrestamos">Préstamos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/miPerfil">Mi Perfil</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/cerrarSesion">Cerrar Sesión</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<!-- Fragmento del Menú de Navegación para Administradores-->
+	<nav th:fragment="menu-admin" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Biblioteca</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/index">Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/catalogo">Catálogo de libros</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/misPrestamos">Préstamos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/miPerfil">Mi Perfil</a>
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/verPanelAdmin">Panel Administrador</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/cerrarSesion">Cerrar Sesión</a>
 				</li>
 			</ul>
 		</div>

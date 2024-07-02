@@ -25,21 +25,18 @@ public class Libro {
 	private String autor;
 	@NotBlank(message = "El género no puede estar vacío")
 	private String genero;
-	
+
 	private String rutaImagen;
-	
+
+	private boolean estaReservado;
+
 	@NotNull(message = "El número de páginas no puede estar vacío")
 	@Positive(message = "El número de páginas debe ser positivo")
 	private Integer paginas;
 
 	@Transient
 	private MultipartFile imagen; // Este campo es para el archivo de la imagen, no se almacena en la base de
-									// datos
-
-	@ManyToOne
-	@JoinColumn(name = "user_email")
-	private Usuario usuario;
-
+									// dato
 	public String getTitulo() {
 		return titulo;
 	}
@@ -94,6 +91,14 @@ public class Libro {
 
 	public void setRutaImagen(String rutaImagen) {
 		this.rutaImagen = rutaImagen;
+	}
+
+	public boolean isEstaReservado() {
+		return estaReservado;
+	}
+
+	public void setEstaReservado(boolean estaReservado) {
+		this.estaReservado = estaReservado;
 	}
 
 }

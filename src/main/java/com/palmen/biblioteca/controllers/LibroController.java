@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.palmen.biblioteca.models.entities.Libro;
@@ -57,6 +58,18 @@ public class LibroController {
 
 		libroService.save(libro);
 		return "redirect:/catalogo";
+	}
+
+	@GetMapping("/libros/editar/{isbn}")
+	public String mostrarFormularioEdicion(@PathVariable String isbn, Model model) {
+		Optional<Libro> optionalLibro = libroService.findById(isbn);
+		if (optionalLibro.isPresent()) {
+			model.addAttribute("libroAEditar", optionalLibro.get());
+		} else {
+			model.addAttribute("error", "El libro no fue encontrado.");
+		}
+		model.addAttribute("libro", libroService.findAll());
+		return "ver-libros"; // Nombre de la plantilla Thymeleaf
 	}
 
 	@PostMapping("/borrarLibros")

@@ -11,8 +11,19 @@
 <body>
 	<div class="container">
 		<h1>BIBLIOTECA</h1>
-		<!-- Incluyendo el fragmento del menú desde fragments.html -->
-		<div th:replace="fragments :: menuFragment"></div>
+		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
+		<div th:if="${session.usuario == null}">
+			<!-- Menú por defecto para usuarios no logeados -->
+			<div th:replace="fragments :: menu-por-defecto"></div>
+		</div>
+		<div th:if="${session.usuario != null}">
+			<div th:if="${session.usuario.esAdmin}">
+				<div th:replace="fragments :: menu-admin"></div>
+			</div>
+			<div th:if="${!session.usuario.esAdmin}">
+				<div th:replace="fragments :: menu-usuario"></div>
+			</div>
+		</div>
 
 		<h2>Listado de Libros</h2>
 		<table class="table table-striped table-hover table-bordered">
@@ -34,17 +45,45 @@
 					<td th:text="${lib.genero}"></td>
 					<td th:text="${lib.paginas}"></td>
 					<td class="actions">
+						<!-- Botón de Editar -->
 						<a class="btn btn-primary btn-sm"
 							th:href="@{/libros/editar/{isbn}(isbn=${lib.isbn})}">Editar</a>
+
+						<!-- Formulario de eliminación -->
 						<form th:action="@{/borrarLibros}" method="post" style="display: inline-block;">
 							<input type="hidden" name="isbn" th:value="${lib.isbn}" />
 							<input type="submit" class="btn btn-danger btn-sm" value="Eliminar"
 								onclick="return confirm('¿Estás seguro de eliminar este libro?')" />
 						</form>
+
+						<!-- Formulario de edición -->
+						<div th:if="${libroAEditar != null && libroAEditar.isbn == lib.isbn}">
+							<h2 th:text="'Editando libro: ' + ${libroAEditar.titulo}">Formulario de Edición</h2>
+							<form th:action="@{/libros/editar}" th:object="${libroAEditar}" method="post">
+								<input type="hidden" th:field="*{isbn}" />
+								<div class="form-group">
+									<label for="titulo">Título:</label>
+									<input type="text" class="form-control" id="titulo" th:field="*{titulo}">
+								</div>
+								<div class="form-group">
+									<label for="autor">Autor:</label>
+									<input type="text" class="form-control" id="autor" th:field="*{autor}">
+								</div>
+								<div class="form-group">
+									<label for="genero">Género:</label>
+									<input type="text" class="form-control" id="genero" th:field="*{genero}">
+								</div>
+								<div class="form-group">
+									<label for="paginas">Páginas:</label>
+									<input type="text" class="form-control" id="paginas" th:field="*{paginas}">
+								</div>
+								<button type="submit" class="btn btn-primary">Guardar cambios</button>
+							</form>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+	</div>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

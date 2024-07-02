@@ -10,12 +10,17 @@ import com.palmen.biblioteca.repository.UsuarioRepository;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
+	
+	//Identificador para el administrador
+	private static final String ADMIN_USERNAME = "Admin";
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Override
 	public void save(Usuario usuario) {
+		boolean isAdmin = ADMIN_USERNAME.equals(usuario.getUsername());
+		usuario.setEsAdmin(isAdmin);
 		usuarioRepository.save(usuario);
 	}
 

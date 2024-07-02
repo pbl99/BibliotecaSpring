@@ -1,5 +1,7 @@
 package com.palmen.biblioteca.controllers;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,7 @@ public class RegistroController {
 		if (result.hasErrors()) {
 			return "registro";
 		}
+		usuario.setFechaRegistro(LocalDate.now());
 		usuarioService.save(usuario);
 		return "redirect:login";
 	}

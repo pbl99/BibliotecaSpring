@@ -1,8 +1,10 @@
 package com.palmen.biblioteca.models.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -15,6 +17,7 @@ public class Usuario {
 
 	@Id
 	@Email
+	@NotBlank(message = "El email no puede estar vacío")
 	private String email;
 
 	@NotBlank(message = "El nombre de usuario no puede estar vacío")
@@ -24,8 +27,20 @@ public class Usuario {
 	@Pattern(regexp = ".{8,}", message = "La contraseña debe tener al menos 8 caracteres")
 	private String password;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Libro> libros;
+	@NotBlank(message = "El nombre no puede estar vacío")
+	private String nombre;
+
+	@NotBlank(message = "Los apellidos no pueden estar vacíos")
+	private String apellidos;
+
+	//@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	//private List<Libro> libros;
+
+	@Column(name = "es_admin")
+	private boolean esAdmin = false;
+
+	@Column(name = "fecha_registro")
+	private LocalDate fechaRegistro;
 
 	public String getEmail() {
 		return email;
@@ -51,12 +66,44 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public List<Libro> getLibros() {
+	/*public List<Libro> getLibros() {
 		return libros;
 	}
 
 	public void setLibros(List<Libro> libros) {
 		this.libros = libros;
+	}*/
+
+	public boolean isEsAdmin() {
+		return esAdmin;
+	}
+
+	public void setEsAdmin(boolean esAdmin) {
+		this.esAdmin = esAdmin;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public LocalDate getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(LocalDate fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
 	}
 
 }
