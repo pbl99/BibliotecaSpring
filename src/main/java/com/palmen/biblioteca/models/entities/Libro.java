@@ -4,8 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +27,8 @@ public class Libro {
 	private String rutaImagen;
 
 	private boolean estaReservado;
+
+	private boolean habilitado = true;
 
 	@NotNull(message = "El número de páginas no puede estar vacío")
 	@Positive(message = "El número de páginas debe ser positivo")
@@ -99,6 +99,14 @@ public class Libro {
 
 	public void setEstaReservado(boolean estaReservado) {
 		this.estaReservado = estaReservado;
+	}
+
+	public boolean isHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(boolean habilitado) {
+		this.habilitado = habilitado;
 	}
 
 }

@@ -15,37 +15,47 @@
 		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
 		<div th:if="${session.usuario == null}">
 			<!-- Menú por defecto para usuarios no logeados -->
-			<div th:replace="fragments :: menu-por-defecto"></div>
+			<div th:insert="~{fragments :: menu-por-defecto}"></div>
 		</div>
 		<div th:if="${session.usuario != null}">
 			<div th:if="${session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-admin"></div>
+				<div th:insert="~{fragments :: menu-admin}"></div>
 			</div>
 			<div th:if="${!session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-usuario"></div>
+				<div th:insert="~{fragments :: menu-usuario}"></div>
 			</div>
 		</div>
 
 		<div class="row">
 			<!-- Repite este bloque para cada libro -->
 			<div class="col-md-3" th:each="lib : ${libros}">
-				<div class="card mb-4 shadow-sm">
-					<div style="width: 304px; height: 450px; overflow: hidden;">
-						<img class="card-img-top" th:src="@{/images/} + ${lib.rutaImagen}" alt="Portada del libro"
-							style="object-fit: cover; width: 100%; height: 100%;">
-					</div>
-					<div class="card-body">
-						<h5 class="card-title" th:text="${lib.titulo}">Título del Libro</h5>
-						<p class="card-text">
-							<strong>Autor:</strong> <span th:text="${lib.autor}">Autor del Libro</span><br>
-							<strong>Páginas:</strong> <span th:text="${lib.paginas}">Número de Páginas</span>
-						</p>
-						<div class="d-flex justify-content-between align-items-center">
-							<form th:action="@{/reservarLibro}" method="post" style="display: inline-block;">
-								<input type="hidden" name="isbn" th:value="${lib.isbn}" />
-								<input type="submit" class="btn btn-sm btn-outline-secondary" value="Reservar"
-									onclick="return confirm('Seguro que quieres reservar este libro?')" />
-							</form>
+				<div th:if="${lib.habilitado}">
+					<div class="card mb-4 shadow-sm">
+						<div style="width: 304px; height: 450px; overflow: hidden;">
+							<img class="card-img-top" th:src="@{/images/} + ${lib.rutaImagen}" alt="Portada del libro"
+								style="object-fit: cover; width: 100%; height: 100%;">
+						</div>
+						<div class="card-body">
+							<h5 class="card-title" th:text="${lib.titulo}">Título del Libro</h5>
+							<p class="card-text">
+								<strong>Isbn:</strong> <span th:text="${lib.isbn}">ISBN del libro</span><br>
+								<strong>Autor:</strong> <span th:text="${lib.autor}">Autor del Libro</span><br>
+								<strong>Páginas:</strong> <span th:text="${lib.paginas}">Número de Páginas</span><br>
+								<strong>Esta en Préstamo:</strong> <span th:text="${lib.estaReservado}">Esta
+									Reservado</span>
+							</p>
+							<div class="d-flex justify-content-between align-items-center">
+								<div th:if="${!lib.estaReservado}">
+									<form th:action="@{/reservarLibro}" method="post" style="display: inline-block;">
+										<input type="hidden" name="isbn" th:value="${lib.isbn}" />
+										<input type="submit" class="btn btn-sm btn-outline-secondary" value="Reservar"
+											onclick="return confirm('Seguro que quieres reservar este libro?')" />
+									</form>
+								</div>
+								<div th:if="${lib.estaReservado}">
+									<p><em>Este libro está actualmente reservado.</em></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

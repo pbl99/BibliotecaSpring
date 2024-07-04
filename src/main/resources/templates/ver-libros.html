@@ -14,14 +14,14 @@
 		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
 		<div th:if="${session.usuario == null}">
 			<!-- Menú por defecto para usuarios no logeados -->
-			<div th:replace="fragments :: menu-por-defecto"></div>
+			<div th:insert="~{fragments :: menu-por-defecto}"></div>
 		</div>
 		<div th:if="${session.usuario != null}">
 			<div th:if="${session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-admin"></div>
+				<div th:insert="~{fragments :: menu-admin}"></div>
 			</div>
 			<div th:if="${!session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-usuario"></div>
+				<div th:insert="~{fragments :: menu-usuario}"></div>
 			</div>
 		</div>
 
@@ -49,18 +49,20 @@
 						<a class="btn btn-primary btn-sm"
 							th:href="@{/libros/editar/{isbn}(isbn=${lib.isbn})}">Editar</a>
 
-						<!-- Formulario de eliminación -->
-						<form th:action="@{/borrarLibros}" method="post" style="display: inline-block;">
+						<!-- Formulario de deshabilitar -->
+						<form th:action="@{/libros/deshabilitar}" method="post" style="display: inline-block;">
 							<input type="hidden" name="isbn" th:value="${lib.isbn}" />
-							<input type="submit" class="btn btn-danger btn-sm" value="Eliminar"
-								onclick="return confirm('¿Estás seguro de eliminar este libro?')" />
+							<input type="submit" class="btn btn-danger btn-sm" value="Deshabilitar"
+								onclick="return confirm('¿Estás seguro de deshabilitar este libro?')" />
 						</form>
 
 						<!-- Formulario de edición -->
 						<div th:if="${libroAEditar != null && libroAEditar.isbn == lib.isbn}">
 							<h2 th:text="'Editando libro: ' + ${libroAEditar.titulo}">Formulario de Edición</h2>
-							<form th:action="@{/libros/editar}" th:object="${libroAEditar}" method="post">
+							<form th:action="@{/libros/editar}" th:object="${libroAEditar}" method="post"
+								enctype="multipart/form-data">
 								<input type="hidden" th:field="*{isbn}" />
+								<input type="hidden" th:field="*{estaReservado}" />
 								<div class="form-group">
 									<label for="titulo">Título:</label>
 									<input type="text" class="form-control" id="titulo" th:field="*{titulo}">
@@ -77,13 +79,20 @@
 									<label for="paginas">Páginas:</label>
 									<input type="text" class="form-control" id="paginas" th:field="*{paginas}">
 								</div>
+								<div class="form-group">
+									<label for="imagen">Añadir Imagen:</label>
+									<input type="file" class="form-control-file" id="imagen" name="imagen">
+									<div th:if="${#fields.hasErrors('imagen')}" th:errors="*{imagen}"
+										class="text-danger"></div>
+								</div>
 								<button type="submit" class="btn btn-primary">Guardar cambios</button>
+								<a class="btn btn-secondary" th:href="@{/buscarTodos}">Cancelar</a>
+								<div th:if="${errorMensaje}" class="alert alert-danger" th:text="${errorMensaje}"></div>
 							</form>
 					</td>
 				</tr>
 			</tbody>
-		</table>
-	</div>
+		</table> 
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

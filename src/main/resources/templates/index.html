@@ -14,17 +14,17 @@
 		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
 		<div th:if="${session.usuario == null}">
 			<!-- Menú por defecto para usuarios no logeados -->
-			<div th:replace="fragments :: menu-por-defecto"></div>
+			<div th:insert="~{fragments :: menu-por-defecto}"></div>
 		</div>
 		<div th:if="${session.usuario != null}">
 			<div th:if="${session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-admin"></div>
+				<div th:insert="~{fragments :: menu-admin}"></div>
 			</div>
 			<div th:if="${!session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-usuario"></div>
+				<div th:insert="~{fragments :: menu-usuario}"></div>
 			</div>
 		</div>
-		
+
 		<div class="mt-4">
 			<h2>Sobre Nosotros</h2>
 			<p>Bienvenido a nuestro Sistema de Gestión de Bibliotecas. Esta plataforma está diseñada para facilitar la

@@ -15,44 +15,54 @@
 		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
 		<div th:if="${session.usuario == null}">
 			<!-- Menú por defecto para usuarios no logeados -->
-			<div th:replace="fragments :: menu-por-defecto"></div>
+			<div th:insert="~{fragments :: menu-por-defecto}"></div>
 		</div>
 		<div th:if="${session.usuario != null}">
 			<div th:if="${session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-admin"></div>
+				<div th:insert="~{fragments :: menu-admin}"></div>
 			</div>
 			<div th:if="${!session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-usuario"></div>
+				<div th:insert="~{fragments :: menu-usuario}"></div>
 			</div>
 		</div>
 	</div>
 	<div class="container mt-5">
 		<h2 class="text-center">Historial de Préstamos</h2>
-		<div class="table-responsive">
-			<table class="table table-striped table-bordered">
-				<thead class="table-dark">
-					<tr>
-						<th>#</th>
-						<th>ISBN</th>
-						<th>Título</th>
-						<th>Autor</th>
-						<th>Fecha de Préstamo</th>
-						<th>Fecha de Devolución</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="prestamo, rowStat : ${prestamos}">
-						<td th:text="${rowStat.index + 1}"></td>
-						<td th:text="${prestamo.libro.isbn}"></td>
-						<td th:text="${prestamo.libro.titulo}"></td>
-						<td th:text="${prestamo.libro.autor}"></td>
-						<td th:text="${#dates.format(prestamo.fechaPrestamo, 'dd/MM/yyyy HH:mm')}"></td>
-						<td th:text="${#dates.format(prestamo.fechaDevolucion, 'dd/MM/yyyy HH:mm')}"
-							th:if="${prestamo.fechaDevolucion != null}"></td>
-						<td th:text="'En préstamo'" th:if="${prestamo.fechaDevolucion == null}"></td>
-					</tr>
-				</tbody>
-			</table>
+		<div th:if="${error != null}">
+			<p th:text="${error}" style="color: red;"></p>
+		</div>
+		<div th:if="${error == null}">
+			<div th:if="${#lists.isEmpty(prestamos)}">
+				<p>No tienes préstamos.</p>
+			</div>
+			<div th:if="${!#lists.isEmpty(prestamos)}">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered">
+						<thead class="table-dark">
+							<tr>
+								<th>#</th>
+								<th>ISBN</th>
+								<th>Título</th>
+								<th>Autor</th>
+								<th>Fecha de Préstamo</th>
+								<th>Fecha de Devolución</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="prestamo, rowStat : ${prestamos}">
+								<td th:text="${rowStat.index + 1}"></td>
+								<td th:text="${prestamo.libro.isbn}"></td>
+								<td th:text="${prestamo.libro.titulo}"></td>
+								<td th:text="${prestamo.libro.autor}"></td>
+								<td th:text="${prestamo.fechaPrestamo}"></td>
+								<td th:text="${prestamo.fechaDevolucion}" th:if="${prestamo.fechaDevolucion != null}">
+								</td>
+								<td th:text="'En préstamo'" th:if="${prestamo.fechaDevolucion == null}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

@@ -11,34 +11,35 @@
 <body>
 	<div class="container">
 		<h1>BIBLIOTECA</h1>
-		<h2>Catálogo de libros</h2>
+		<h2>Login</h2>
 		<!-- Incluir el fragmento de menú adecuado según el rol del usuario -->
 		<div th:if="${session.usuario == null}">
 			<!-- Menú por defecto para usuarios no logeados -->
-			<div th:replace="fragments :: menu-por-defecto"></div>
+			<div th:insert="~{fragments :: menu-por-defecto}"></div>
 		</div>
 		<div th:if="${session.usuario != null}">
 			<div th:if="${session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-admin"></div>
+				<div th:insert="~{fragments :: menu-admin}"></div>
 			</div>
 			<div th:if="${!session.usuario.esAdmin}">
-				<div th:replace="fragments :: menu-usuario"></div>
+				<div th:insert="~{fragments :: menu-usuario}"></div>
 			</div>
 		</div>
 
-		<form th:action="@{/autenticarUsuario}" th:object="${usuario}" method="post">
+		<form th:action="@{/autenticarUsuario}" th:object="${loginDTO}" method="post">
 			<div class="mb-3">
 				<label for="email" class="form-label">Email</label>
 				<input type="text" class="form-control" id="email" name="email" th:field="*{email}">
+				<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
 			</div>
 			<div class="mb-3">
 				<label for="password" class="form-label">Contraseña</label>
 				<input type="password" class="form-control" id="password" name="password" th:field="*{password}">
+				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
 			</div>
 			<div>
 				<input type="submit" class="btn btn-primary" value="Login">
 			</div>
-			<div th:if="${usuariocorrecto}" class="alert alert-danger" th:text="${usuariocorrecto}"></div>
 			<div th:if="${usuarioincorrecto}" class="alert alert-danger" th:text="${usuarioincorrecto}"></div>
 		</form>
 	</div>
