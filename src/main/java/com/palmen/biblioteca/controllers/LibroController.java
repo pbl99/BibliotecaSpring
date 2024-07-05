@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,12 @@ public class LibroController {
 
 	@PostMapping("/crearLibros")
 	public String crearLibros(@Valid Libro libro, BindingResult result, Model model) {
-		
+
 		// Validar la imagen manualmente si está vacía
 		if (libro.getImagen() == null || libro.getImagen().isEmpty()) {
 			result.rejectValue("imagen", "error.libro", "Por favor seleccione una imagen.");
 		}
-		
+
 		if (result.hasErrors()) {
 			return "panel-admin";
 		}
@@ -78,14 +79,26 @@ public class LibroController {
 		} else {
 			model.addAttribute("error", "El libro no fue encontrado.");
 		}
-		model.addAttribute("libro", libroService.findAll());
+		model.addAttribute("librosHabilitados", libroService.obtenerLibrosHabilitados());
+		model.addAttribute("librosDeshabilitados", libroService.obtenerLibrosDeshabilitados());
+		model.addAttribute("mostrar", "habilitados"); // Para mantener la vista inicial en habilitados
 		return "ver-libros"; // Nombre de la plantilla Thymeleaf
 	}
 
 	@PostMapping("/libros/editar")
 	public String editarLibros(@Valid @ModelAttribute("libroAEditar") Libro libro, BindingResult result, Model model) {
+
+		// Validar la imagen manualmente si está vacía
+		if (libro.getImagen() == null || libro.getImagen().isEmpty()) {
+			result.rejectValue("imagen", "error.libroAEditar", "Por favor seleccione una imagen.");
+		}
+
 		if (result.hasErrors()) {
-			return "redirect:/buscarTodos";
+			model.addAttribute("errorMensaje", "Ha ocurrido un error al guardar los cambios");
+			model.addAttribute("librosHabilitados", libroService.obtenerLibrosHabilitados());
+			model.addAttribute("librosDeshabilitados", libroService.obtenerLibrosDeshabilitados());
+			model.addAttribute("mostrar", "habilitados"); // Mantener la vista inicial en habilitados
+			return "ver-libros";
 		}
 		// Verificar si la imagen no está vacía
 		if (libro.getImagen() != null && !libro.getImagen().isEmpty()) {
@@ -101,9 +114,10 @@ public class LibroController {
 			} catch (IOException e) {
 				e.printStackTrace();
 				model.addAttribute("errorMensaje", "Hubo un problema al subir la imagen");
-				return "editarLibro";
+				return "ver-libros";
 			}
 		}
+
 		if (libro.isEstaReservado()) {
 			libro.setEstaReservado(true);
 		}
@@ -140,14 +154,26 @@ public class LibroController {
 	}
 
 	@GetMapping("/buscarTodos")
-	public String buscarTodos(HttpSession session, Model model) {
+	public String buscarTodos(HttpSession session, @RequestParam(required = false) String mostrar, Model model) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
 		if (usuario == null) {
 			return "index";
 		}
 		if (usuario.isEsAdmin()) {
-			model.addAttribute("libro", libroService.findAll());
+			List<Libro> librosHabilitados = libroService.obtenerLibrosHabilitados();
+			List<Libro> librosDeshabilitados = libroService.obtenerLibrosDeshabilitados();
+
+			model.addAttribute("librosHabilitados", librosHabilitados);
+			model.addAttribute("librosDeshabilitados", librosDeshabilitados);
+
+			// Establecer mostrar por defecto como "habilitados" si no se especifica
+			if (mostrar == null || mostrar.isEmpty()) {
+				mostrar = "habilitados";
+			}
+
+			model.addAttribute("mostrar", mostrar);
+
 			return "ver-libros";
 		} else {
 			return "index";
@@ -160,9 +186,22 @@ public class LibroController {
 		Optional<Libro> optionalLibro = libroService.findById(isbn);
 		if (optionalLibro.isPresent()) {
 			Libro libroDeshabilitado = optionalLibro.get();
-			
+
 			libroDeshabilitado.setHabilitado(false);
 			libroService.save(libroDeshabilitado); // Guardar el libro con estado deshabilitado
+		}
+		return "redirect:/catalogo";
+	}
+
+	// Ejemplo para habilitar un libro
+	@PostMapping("/libros/habilitar")
+	public String habilitarLibro(@RequestParam("isbn") String isbn) {
+		Optional<Libro> optionalLibro = libroService.findById(isbn);
+		if (optionalLibro.isPresent()) {
+			Libro libroHabilitado = optionalLibro.get();
+
+			libroHabilitado.setHabilitado(true);
+			libroService.save(libroHabilitado); // Guardar el libro con estado habilitado
 		}
 		return "redirect:/catalogo";
 	}

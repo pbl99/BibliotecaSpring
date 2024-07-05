@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.palmen.biblioteca.models.entities.Libro;
 import com.palmen.biblioteca.models.entities.Prestamo;
@@ -48,7 +49,7 @@ public class PrestamoController {
 			model.addAttribute("error", "El libro no fue encontrado");
 			return "redirect:/catalogo";
 		}
-		
+
 		Libro libroActualizado = optionalLibro.get();
 		libroActualizado.setEstaReservado(true);
 		libroService.save(libroActualizado);
@@ -69,7 +70,7 @@ public class PrestamoController {
 	public String verPrestamos(HttpSession session, Model model) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		List<Prestamo> prestamos = prestamoService.findAll();
-		
+
 		List<Prestamo> prestamosUsuario = new ArrayList<>();
 		if (usuario != null) {
 			for (Prestamo prestamo : prestamos) {
@@ -79,9 +80,41 @@ public class PrestamoController {
 			}
 			model.addAttribute("prestamos", prestamosUsuario);
 		} else {
-			model.addAttribute("error", "Necesitas iniciar sesión para ver tu historial de préstamos"); // O una lista vacía si prefieres
+			model.addAttribute("error", "Necesitas iniciar sesión para ver tu historial de préstamos");
 		}
 		return "prestamos";
+	}
+
+	@PostMapping("/devolverLibros")
+	public String devolverLibros(@RequestParam("isbn") String isbn, Libro libro, Model model) {
+		Optional<Prestamo> optionalPrestamo = prestamoService.findByLibroIsbn(isbn);
+		Optional<Libro> optionalLibro = libroService.findById(isbn);
+
+		if (optionalPrestamo.isPresent()) {
+			Prestamo prestamoResuelto = optionalPrestamo.get();
+
+			prestamoResuelto.setDevuelto(true);
+			prestamoService.save(prestamoResuelto);
+		}
+
+		if (optionalLibro.isPresent()) {
+			Libro libroDevuelto = optionalLibro.get();
+
+			libroDevuelto.setEstaReservado(false);
+			libroService.save(libroDevuelto);
+		} else {
+			model.addAttribute("errorDevolver", "El libro para devolver no se ha encontrado, revisa el isbn");
+			return "panel-admin";
+		}
+		return "redirect:/catalogo";
+
+	}
+	
+	
+	//Limitar préstamos activos a 3 por usuario
+	public String limitarPrestamos(HttpSession session) {
+		
+		return "";
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.palmen.biblioteca.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class PrestamoServiceImpl implements IPrestamoService {
 	@Override
 	public List<Prestamo> findAll() {
 		return prestamoRepository.findAll();
+	}
+
+	@Override
+	public Optional<Prestamo> findByLibroIsbn(String isbn) {
+		return prestamoRepository.findByLibroIsbn(isbn);
 	}
 
 }

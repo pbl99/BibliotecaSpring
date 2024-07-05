@@ -14,4 +14,8 @@ public interface ILibroService {
 
 	List<Libro> findAll();
 
+	List<Libro> obtenerLibrosHabilitados();
+
+	List<Libro> obtenerLibrosDeshabilitados();
+
 }

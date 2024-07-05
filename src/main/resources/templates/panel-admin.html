@@ -57,11 +57,23 @@
 			<div class="form-group">
 				<label for="imagen">Añadir Imagen:</label>
 				<input type="file" class="form-control-file" id="imagen" name="imagen" th:field="*{imagen}">
-				<div th:if="${#fields.hasErrors('imagen')}"  th:errors="*{imagen}" class="text-danger"></div>
+				<div th:if="${#fields.hasErrors('imagen')}" th:errors="*{imagen}" class="text-danger"></div>
 			</div>
 			<div>
 				<input type="submit" class="btn btn-primary" value="Crear Libro">
 			</div>
+		</form>
+
+		<h2>Devolución de Libros en préstamo</h2>
+		<p>Si el usuario ha devuelto el libro, resuelve el préstamo</p>
+		<form th:action="@{/devolverLibros}" th:object="${libro}" method="post">
+			<div class="form-group">
+				<label for="isbn">Isbn</label>
+				<input type="text" class="form-control" id="isbn" name="isbn" th:value="${isbn}">
+				<div th:if="${exito}" class="alert alert-danger" th:text="${exito}"></div>
+				<div th:if="${errorDevolver}" class="alert alert-danger" th:text="${errorDevolver}"></div>
+			</div>
+			<input type="submit" class="btn btn-primary" value="Devolver Libro">
 		</form>
 
 		<h2>Borrar Libros</h2>
@@ -72,7 +84,7 @@
 				<div th:if="${exito}" class="alert alert-danger" th:text="${exito}"></div>
 				<div th:if="${errorBorrarPorId}" class="alert alert-danger" th:text="${errorBorrarPorId}"></div>
 			</div>
-			<input type="submit" class="btn btn-primary" value="Enviar">
+			<input type="submit" class="btn btn-primary" value="Borrar">
 		</form>
 		<h2>Buscar libro por Isbn</h2>
 		<form th:action="@{/buscarPorId}" th:object="${libro}" method="post">

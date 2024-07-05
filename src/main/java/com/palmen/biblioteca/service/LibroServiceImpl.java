@@ -34,4 +34,14 @@ public class LibroServiceImpl implements ILibroService {
 	public List<Libro> findAll() {
 		return libroRepository.findAll();
 	}
+
+	@Override
+	public List<Libro> obtenerLibrosHabilitados() {
+		return libroRepository.findByHabilitadoTrue();
+	}
+
+	@Override
+	public List<Libro> obtenerLibrosDeshabilitados() {
+		return libroRepository.findByHabilitadoFalse();
+	}
 }
