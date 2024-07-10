@@ -68,6 +68,12 @@ spring.datasource.password=tu_contraseña
 spring.jpa.hibernate.ddl-auto=update
 ```
 
+## Modelo Relacional
+
+A continuación se muestra el modelo relacional de la base de datos utilizada en este proyecto:
+
+<img src="src/main/resources/static/images/modelorelacional.png" alt="Modelo Relacional" style="width: 350px;">
+
 ## Contribuir
 Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 
