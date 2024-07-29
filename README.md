@@ -6,6 +6,9 @@ Aplicación de Sistema de Gestión de Bibliotecas
 
 BibliotecaSpring es una aplicación para la gestión de bibliotecas que permite a los administradores crear, actualizar y eliminar libros, así como a los usuarios buscar libros disponibles y cogerlos prestados. También incluye funcionalidad básica de autenticación y gestión de sesiones de usuarios.
 
+## Vista Principal Catálogo Biblioteca
+![Descripción de la imagen](https://i.imgur.com/idgM83m.png)  
+
 ## Funcionalidades
 
 - **Autenticación de usuarios**: Registro, inicio de sesión y gestión de sesiones.
