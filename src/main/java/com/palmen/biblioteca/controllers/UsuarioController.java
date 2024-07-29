@@ -14,7 +14,7 @@ public class UsuarioController {
 	@GetMapping("/verPanelAdmin")
 	public String verPanelAdmin(HttpSession session, Libro libro) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
-
+		
 		if (usuario == null) {
 			return "redirect:/inicio";
 		} else if (usuario.isEsAdmin()) {
@@ -22,7 +22,7 @@ public class UsuarioController {
 		} else {
 			return "redirect:/inicio";
 		}
-
+		
 	}
 
 	@GetMapping("/miPerfil")

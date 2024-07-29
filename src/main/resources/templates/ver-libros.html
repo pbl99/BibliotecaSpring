@@ -49,7 +49,7 @@
 						<th>ISBN</th>
 						<th>Título</th>
 						<th>Autor</th>
-						<th>Género</th>
+						<th>Categoría</th>
 						<th>Páginas</th>
 						<th>Acciones</th>
 					</tr>
@@ -59,7 +59,7 @@
 						<td th:text="${lib.isbn}"></td>
 						<td th:text="${lib.titulo}"></td>
 						<td th:text="${lib.autor}"></td>
-						<td th:text="${lib.genero}"></td>
+						<td th:text="${lib.categoria}"></td>
 						<td th:text="${lib.paginas}"></td>
 						<td class="actions">
 							<!-- Botón de Editar -->
@@ -93,9 +93,9 @@
 											class="alert alert-danger"></div>
 									</div>
 									<div class="form-group">
-										<label for="genero">Género:</label>
-										<input type="text" class="form-control" id="genero" th:field="*{genero}">
-										<div th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}"
+										<label for="categoria">Categoría:</label>
+										<input type="text" class="form-control" id="categoria" th:field="*{categoria}">
+										<div th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"
 											class="alert alert-danger"></div>
 									</div>
 									<div class="form-group">
@@ -140,7 +140,7 @@
 							<th>ISBN</th>
 							<th>Título</th>
 							<th>Autor</th>
-							<th>Género</th>
+							<th>Categoría</th>
 							<th>Páginas</th>
 							<th>Acciones</th>
 						</tr>
@@ -150,7 +150,7 @@
 							<td th:text="${lib.isbn}"></td>
 							<td th:text="${lib.titulo}"></td>
 							<td th:text="${lib.autor}"></td>
-							<td th:text="${lib.genero}"></td>
+							<td th:text="${lib.categoria}"></td>
 							<td th:text="${lib.paginas}"></td>
 							<td class="actions">
 								<!-- Formulario de habilitar -->
@@ -173,7 +173,7 @@
 						<th>ISBN</th>
 						<th>Título</th>
 						<th>Autor</th>
-						<th>Género</th>
+						<th>Categoría</th>
 						<th>Páginas</th>
 						<th>Estado</th>
 					</tr>
@@ -183,7 +183,7 @@
 						<td th:text="${libro.isbn}"></td>
 						<td th:text="${libro.titulo}"></td>
 						<td th:text="${libro.autor}"></td>
-						<td th:text="${libro.genero}"></td>
+						<td th:text="${libro.categoria}"></td>
 						<td th:text="${libro.paginas}"></td>
 						<td th:text="${libro.estaReservado ? 'Reservado' : 'Disponible'}"></td>
 					</tr>

@@ -44,4 +44,10 @@ public class LibroServiceImpl implements ILibroService {
 	public List<Libro> obtenerLibrosDeshabilitados() {
 		return libroRepository.findByHabilitadoFalse();
 	}
+
+	@Override
+	public List<Libro> obtenerLibrosPorCategoria(String categoria) {
+		return libroRepository.findByCategoria(categoria);
+	}
+
 }

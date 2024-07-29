@@ -21,8 +21,8 @@ public class Libro {
 	private String titulo;
 	@NotBlank(message = "El autor no puede estar vacío")
 	private String autor;
-	@NotBlank(message = "El género no puede estar vacío")
-	private String genero;
+	@NotBlank(message = "La categoría no puede estar vacío")
+	private String categoria;
 
 	private String rutaImagen;
 
@@ -53,12 +53,12 @@ public class Libro {
 		this.autor = autor;
 	}
 
-	public String getGenero() {
-		return genero;
+	public String getCategoria() {
+		return categoria;
 	}
 
-	public void setGenero(String genero) {
-		this.genero = genero;
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public Integer getPaginas() {

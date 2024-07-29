@@ -31,6 +31,13 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/login">Login</a>
 				</li>
+				<li class="nav-item" th:if="${vista == 'catalogo'}">
+					<form th:action="@{/buscarLibros}" method="post" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
+						<input type="search" class="form-control form-control-dark me-2" placeholder="Buscar por categoría..."
+							aria-label="Search" name="categoria">
+						<input type="submit" class="btn btn-warning" value="Buscar">
+					</form>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -57,6 +64,13 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/cerrarSesion">Cerrar Sesión</a>
+				</li>
+				<li class="nav-item" th:if="${vista == 'catalogo'}">
+					<form th:action="@{/buscarLibros}" method="post" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
+						<input type="search" class="form-control form-control-dark me-2" placeholder="Buscar por categoría..."
+							aria-label="Search" name="categoria">
+						<input type="submit" class="btn btn-warning" value="Buscar">
+					</form>
 				</li>
 			</ul>
 		</div>
@@ -87,6 +101,13 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/cerrarSesion">Cerrar Sesión</a>
+				</li>
+				<li class="nav-item" th:if="${vista == 'catalogo'}">
+					<form th:action="@{/buscarLibros}" method="post" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
+						<input type="search" class="form-control form-control-dark me-2" placeholder="Buscar por categoría..."
+							aria-label="Search" name="categoria">
+						<input type="submit" class="btn btn-warning" value="Buscar">
+					</form>
 				</li>
 			</ul>
 		</div>

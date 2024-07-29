@@ -17,5 +17,7 @@ public interface ILibroService {
 	List<Libro> obtenerLibrosHabilitados();
 
 	List<Libro> obtenerLibrosDeshabilitados();
+	
+	List<Libro> obtenerLibrosPorCategoria(String categoria);
 
 }

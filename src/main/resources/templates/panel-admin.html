@@ -46,9 +46,10 @@
 				<div th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}" class="alert alert-danger"></div>
 			</div>
 			<div class="form-group">
-				<label for="genero">Género:</label>
-				<input type="text" class="form-control" id="genero" name="genero" th:field="*{genero}">
-				<div th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}" class="alert alert-danger"></div>
+				<label for="categoria">Categoría:</label>
+				<input type="text" class="form-control" id="categoria" name="categoria" th:field="*{categoria}">
+				<div th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}" class="alert alert-danger">
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="paginas">Páginas:</label>
@@ -56,7 +57,7 @@
 				<div th:if="${#fields.hasErrors('paginas')}" th:errors="*{paginas}" class="alert alert-danger"></div>
 			</div>
 			<div class="form-group">
-				<label for="imagen">Añadir Imagen:</label>
+				<label for="imagen">Añadir Imagen (5Mb MAX):</label>
 				<input type="file" class="form-control-file" id="imagen" name="imagen" th:field="*{imagen}">
 				<div th:if="${#fields.hasErrors('imagen')}" th:errors="*{imagen}" class="text-danger"></div>
 			</div>

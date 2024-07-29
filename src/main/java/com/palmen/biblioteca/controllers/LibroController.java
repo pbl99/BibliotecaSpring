@@ -41,18 +41,19 @@ public class LibroController {
 		if (libro.getImagen() == null || libro.getImagen().isEmpty()) {
 			result.rejectValue("imagen", "error.libro", "Por favor seleccione una imagen.");
 		}
-
+		
 		if (result.hasErrors()) {
 			return "panel-admin";
 		}
 
-		// Verificar si la imagen no está vacía
 		if (!libro.getImagen().isEmpty()) {
 			try {
+
 				// Obtener el nombre original del archivo
 				String fileName = StringUtils.cleanPath(libro.getImagen().getOriginalFilename());
 				// Crear el path completo para guardar la imagen
 				Path path = Paths.get(UPLOADED_FOLDER + fileName);
+
 				// Guardar la imagen en el path especificado
 				Files.write(path, libro.getImagen().getBytes());
 
